@@ -35,19 +35,11 @@ A website where you can order wholesale items and have them sent to a dock for y
   GET /api/products/${id}
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-
 #### Create cart
 
 ```http
   POST /api/create-cart
 ```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 
 #### Update cart
 
@@ -55,7 +47,5 @@ A website where you can order wholesale items and have them sent to a dock for y
   PUT /api/update/cart/${id}
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+
 

@@ -1,8 +1,9 @@
 var express = require('express');
-const { register, loginUser } = require('../controllers/usersController');
+var router = express.Router();
+const { register, loginUser, verifyUser } = require('../controllers/usersController');
 const { validateUserData } = require('../utils/validateUserData');
 const { checkIsEmpty } = require('../utils/checkIsEmpty');
-var router = express.Router();
+const { jwtMiddleware } = require('../utils/jwtMiddleware');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -10,5 +11,6 @@ router.get('/', function(req, res, next) {
 });
 router.post("/register", checkIsEmpty, validateUserData, register)
 router.post("/login", checkIsEmpty, validateUserData, loginUser)
+router.get('/validate', jwtMiddleware, verifyUser)
 
 module.exports = router;

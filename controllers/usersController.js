@@ -25,7 +25,7 @@ const register = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
-        const foundUser = await User.findOne({ email })
+        const foundUser = await User.findOne({ email: email })
         if (!foundUser) {
             res.status(500).json({ success: false, message: "User Not Found"})
         }
@@ -41,8 +41,23 @@ const loginUser = async (req, res) => {
     }
 }
 
+const verifyUser = async (req, res) => {
+    try {
+        const decodedToken = res.locals.decodedToken
+        const foundUser = await User.findOne({ _id: decodedToken.userID})
+        if (!foundUser) {
+            return res.status(400).json({ success: false, email: { user: "User not found"} })
+        }
+        res.status(200).json({ success: true, email: foundUser.email })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "error", error: error })
+    }
+}
+
 
 module.exports = {
     register,
-    loginUser
+    loginUser,
+    verifyUser
 }

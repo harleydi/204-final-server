@@ -48,7 +48,21 @@ const verifyUser = async (req, res) => {
         if (!foundUser) {
             return res.status(400).json({ success: false, email: { user: "User not found"} })
         }
-        res.status(200).json({ success: true, email: foundUser.email })
+        res.status(200).json({ success: true, data: foundUser })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "error", error: error })
+    }
+}
+
+const getUser = async (req, res) => {
+    try {
+        const { email } = req.body
+        const user = await User.findOne({ email: email })
+        if (!user) {
+            res.status(500).json({ success: false, message: "user not found" })
+        }
+        res.status(200).json({ success: true, data: user })
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: "error", error: error })
@@ -59,5 +73,6 @@ const verifyUser = async (req, res) => {
 module.exports = {
     register,
     loginUser,
-    verifyUser
+    verifyUser,
+    getUser
 }

@@ -1,5 +1,6 @@
 const Dock = require('../models/Dock')
 const Order = require('../models/Order')
+const User = require('../models/User')
 
 // be sure to push orders to user
 
@@ -18,6 +19,17 @@ const createOrder = async (req, res) => {
     }
 }
 
+const getOrders = async (req, res) => {
+    try {
+        const { id } = req.body
+        const userOrders = await Order.find({})
+        res.status(200).json({ success: true, data: userOrders })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, message: "error", error: error })
+    }
+}
+
 const deleteOrder = async (req, res) => {
     try {
         const { id } = useParams()
@@ -30,5 +42,7 @@ const deleteOrder = async (req, res) => {
 }
 
 module.exports = {
-    createOrder
+    createOrder,
+    getOrders,
+    deleteOrder
 }
